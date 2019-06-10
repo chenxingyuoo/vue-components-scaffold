@@ -2,19 +2,19 @@
 require('./check-versions')()
 
 const buildType = process.argv[2]
-
+const isBuildDemo = buildType === 'build-demo'
 const ora = require('ora')
 const rm = require('rimraf')
 const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
 const config = require('../config')
-const webpackConfig = buildType === 'build-demo' ? require('./webpack.demo.prod.conf') :  require('./webpack.prod.conf')
+const webpackConfig = isBuildDemo ? require('./webpack.demo.prod.conf') :  require('./webpack.prod.conf')
 const spinner = ora('building for production...')
 
 spinner.start()
 
-rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
+rm(isBuildDemo ? path.join(config.build.assetsRoot, config.build.assetsSubDirectory) : path.join(path.resolve(__dirname, '../lib')), err => {
   if (err) throw err
   webpack(webpackConfig, (err, stats) => {
     spinner.stop()

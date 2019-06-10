@@ -1,6 +1,5 @@
 /**
- * 打包生成hbf.min.js
- *(css内嵌在了js里面，没有分离出来)
+ * 打包生成js
  */
 'use strict'
 const path = require('path')
@@ -10,7 +9,6 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-// const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -18,11 +16,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     main: './src/index.js'
   },
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/dist/',
-    filename: 'js/index.js',
+    path: path.resolve(__dirname, '../lib'),
+    publicPath: '/lib/',
+    filename: '[name].js',
+    chunkFilename: '[name].min.js',
     library: "Cui",
-    libraryTarget: 'umd'
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: utils.styleLoaders({

@@ -26,6 +26,7 @@ module.exports = {
       * ‘@’ 指向根目录下的lib文件夹
       */
       'vue$': 'vue/dist/vue.runtime.js',
+       '@': resolve('src'),
        main: resolve('src'),
        example: resolve('example'),
        packages: resolve('packages')
